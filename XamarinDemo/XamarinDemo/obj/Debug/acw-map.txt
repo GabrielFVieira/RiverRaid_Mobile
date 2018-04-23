@@ -1,0 +1,16 @@
+XamarinDemo.AwesomeView, XamarinDemo;md5dd9e07601b2bb8a7c9f88681dee08f8c.AwesomeView
+XamarinDemo.AwesomeView, XamarinDemo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5dd9e07601b2bb8a7c9f88681dee08f8c.AwesomeView
+XamarinDemo.AwesomeView;md5dd9e07601b2bb8a7c9f88681dee08f8c.AwesomeView
+xamarindemo.AwesomeView;md5dd9e07601b2bb8a7c9f88681dee08f8c.AwesomeView
+XamarinDemo.GameView, XamarinDemo;md5dd9e07601b2bb8a7c9f88681dee08f8c.GameView
+XamarinDemo.GameView, XamarinDemo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5dd9e07601b2bb8a7c9f88681dee08f8c.GameView
+XamarinDemo.GameView;md5dd9e07601b2bb8a7c9f88681dee08f8c.GameView
+xamarindemo.GameView;md5dd9e07601b2bb8a7c9f88681dee08f8c.GameView
+XamarinDemo.InGame, XamarinDemo;md5dd9e07601b2bb8a7c9f88681dee08f8c.InGame
+XamarinDemo.InGame, XamarinDemo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5dd9e07601b2bb8a7c9f88681dee08f8c.InGame
+XamarinDemo.InGame;md5dd9e07601b2bb8a7c9f88681dee08f8c.InGame
+xamarindemo.InGame;md5dd9e07601b2bb8a7c9f88681dee08f8c.InGame
+XamarinDemo.MainActivity, XamarinDemo;md5dd9e07601b2bb8a7c9f88681dee08f8c.MainActivity
+XamarinDemo.MainActivity, XamarinDemo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5dd9e07601b2bb8a7c9f88681dee08f8c.MainActivity
+XamarinDemo.MainActivity;md5dd9e07601b2bb8a7c9f88681dee08f8c.MainActivity
+xamarindemo.MainActivity;md5dd9e07601b2bb8a7c9f88681dee08f8c.MainActivity
