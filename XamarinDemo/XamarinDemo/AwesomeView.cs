@@ -81,7 +81,7 @@ namespace XamarinDemo
 
         protected override void OnDraw(Canvas canvas)
         {
-            canvas.DrawBitmap(background, 0, 0, paint);
+            canvas.DrawBitmap(background, Width/2 - background.Width/2, Height/2 - background.Height/2, paint);
             DrawButtons(canvas);
 
         }

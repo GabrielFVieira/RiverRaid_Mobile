@@ -111,10 +111,13 @@ namespace XamarinDemo
 			public const int player_right = 2130837525;
 			
 			// aapt resource value: 0x7f020016
-			public const int ship_l = 2130837526;
+			public const int restart_text = 2130837526;
 			
 			// aapt resource value: 0x7f020017
-			public const int ship_r = 2130837527;
+			public const int ship_l = 2130837527;
+			
+			// aapt resource value: 0x7f020018
+			public const int ship_r = 2130837528;
 			
 			static Drawable()
 			{

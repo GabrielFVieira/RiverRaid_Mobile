@@ -23,15 +23,13 @@ namespace XamarinDemo
         private float minX, maxX, minY;
         private float initialPosX;
         private int[] offset = new int[5];
-        private Player player;
 
-        public EnemiesManager(Bitmap[] ship, Bitmap[] heli, Bitmap[] jet, int n, Player p)
+        public EnemiesManager(Bitmap[] ship, Bitmap[] heli, Bitmap[] jet, int n)
         {
             NumberOfEnemies = n;
             shipImages = ship;
             heliImages = heli;
             jetImages = jet;
-            p = player;
 
             for(int i = 0; i < NumberOfEnemies; i++)
             {
@@ -39,7 +37,6 @@ namespace XamarinDemo
 
                 if (i != 0)
                 {
-
                     Random randomType = new Random();
                     int type = randomType.Next(3);
 
@@ -56,12 +53,12 @@ namespace XamarinDemo
                 else
                     enemyImg = shipImages;
 
-                Enemies enemy = new Enemies(enemyImg, player);
+                Enemies enemy = new Enemies(enemyImg);
                 enemies.Add(enemy);
             }
         }
 
-        public void Update(float speed, bool start)
+        public void Update(float speed, bool start, float x, float y, float w, float h, Player p, List<Bullet> bullets)
         {
             if (enemies.Count > 0)
             {
@@ -71,7 +68,10 @@ namespace XamarinDemo
                         enemies.Remove(enemies[i]);
 
                     else
-                        enemies[i].Update(speed, start);
+                        enemies[i].Update(speed, start, x, y, h, w, bullets);
+
+                    if (enemies[i].colPlayer)
+                        p.SetCol(enemies[i].colPlayer);
                 }
             }
 
@@ -91,7 +91,7 @@ namespace XamarinDemo
                 else
                     enemyImg = jetImages;
 
-                Enemies enemy = new Enemies(enemyImg, player);
+                Enemies enemy = new Enemies(enemyImg);
                 enemies.Add(enemy);
             }
         }

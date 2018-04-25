@@ -39,20 +39,19 @@ namespace XamarinDemo
 
         public float GetX() { return x; }
         public float GetY() { return y; }
-        public float GetW() { return width; }
-        public float GetH() { return height; }
+        public bool GetCol() { return hasCollided; }
+        public void SetCol(bool col) { hasCollided = col; }
 
         public void Draw(Canvas canvas, Bitmap[] playerImage)
         {
             canvas.DrawBitmap(playerImage[curDirection], x, y, paint);
         }
 
-        public void Update(int directionX, float mY, bool col)
+        public void Update(int directionX, float mY)
         {
-            hasCollided = col;
+           // hasCollided = col;
             if (hasCollided)
                 isMoving = false;
-
 
             if (directionX < 0)
                 curDirection = 1;

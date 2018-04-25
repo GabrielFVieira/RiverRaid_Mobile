@@ -17,8 +17,9 @@ namespace XamarinDemo
     public class Bullet
     {
         public Paint paint;
-        private float x, width, height, speed;
+        public float x, width, height, speed;
         public float y;
+        public bool destroy;
         public Bullet(float X, float Y, float w, float h)
         {
             paint = new Paint();
@@ -30,9 +31,13 @@ namespace XamarinDemo
             y = Y;
         }
 
-        public void Update()
+        public void Update(bool col)
         {
-            y -= speed;
+            if(!destroy)
+                y -= speed;
+
+            if (col)
+                destroy = true;
         }
 
         public void Draw(Canvas canvas, Bitmap bulletImage)

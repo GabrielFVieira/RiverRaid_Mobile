@@ -25,6 +25,9 @@ namespace XamarinDemo
         public Player player;
         private Bitmap[] playerImages = new Bitmap[4];
 
+        private bool waitingForButtonUp;
+
+        private Bitmap restartText;
         private Bitmap dpad;
         private float[] dpadPos = new float[2];
         public int[] dpadDirection = new int[2];
@@ -86,6 +89,7 @@ namespace XamarinDemo
             bgRight = BitmapFactory.DecodeResource(Resources, Resource.Drawable.game_bg_right);
             bg = BitmapFactory.DecodeResource(Resources, Resource.Drawable.game_bg);
 
+            restartText = BitmapFactory.DecodeResource(Resources, Resource.Drawable.restart_text);
             mpC = new MapController(bgLeft, bgRight, bg);
 
             //bulletCoolDown = 1;
@@ -123,7 +127,7 @@ namespace XamarinDemo
             heli[1] = BitmapFactory.DecodeResource(Resources, Resource.Drawable.heli_r);
             jet[0] = BitmapFactory.DecodeResource(Resources, Resource.Drawable.jet_l);
             jet[1] = BitmapFactory.DecodeResource(Resources, Resource.Drawable.jet_r);
-            enemiesManager = new EnemiesManager(ship, heli, jet, NumberOfEnemies, player);
+            enemiesManager = new EnemiesManager(ship, heli, jet, NumberOfEnemies);
 
             handler = new Handler();
             handler.Post(this);
@@ -159,14 +163,19 @@ namespace XamarinDemo
                 mpC.Draw(canvas, hudY - bgLeft.Height, bgPos, Width);
 
                 canvas.DrawRect(0, hudY, Width, Height, gray);
-
+                
                 fuel.Draw(canvas, fuelbarPos);
 
                 canvas.DrawBitmap(dpad, dpadPos[0], dpadPos[1], paint);
                 canvas.DrawBitmap(fuelbar, fuelbarPos[0], fuelbarPos[1], paint);
                 canvas.DrawBitmap(fireButton, firePos[0], firePos[1], paint);
                 player.Draw(canvas, playerImages);
-               
+
+                if (player.hasCollided)
+                {
+                    canvas.DrawBitmap(restartText, Width/2 - restartText.Width/2, Height/2 - restartText.Height/2, paint);
+                }
+
                 if (bullets.Count > 0)
                 {
                     for (int i = 0; i < bullets.Count; i++)
@@ -181,7 +190,17 @@ namespace XamarinDemo
         {
             player.PreUpdate(e);
             mpC.PreUpdate(e);
-            
+
+            if (e.Action == MotionEventActions.Up && player.hasCollided && !waitingForButtonUp)
+                waitingForButtonUp = true;
+
+            else if (e.Action == MotionEventActions.Up && player.hasCollided && waitingForButtonUp)
+            {
+                //RELOAD ACTIVITY
+                Toast.MakeText(mContext, "Parece que não esta funcionando, não é mesmo?", ToastLength.Short).Show();
+            }
+
+
             if (InsideDPAD(e.GetX(), e.GetY()))
             {
                 //Toast.MakeText(mContext, "Inside D-PAD", ToastLength.Short).Show();
@@ -294,21 +313,27 @@ namespace XamarinDemo
                 dpadDirection[1] = 1;
                 //Toast.MakeText(mContext, "Down-Right", ToastLength.Short).Show();
             }
+
+            else
+            {
+                dpadDirection[0] = 0;
+                dpadDirection[1] = 0;
+            }
         }
  
         private void Update()
         {
-            player.Update(dpadDirection[0],  playerMinY, mpC.GetCol());
+            player.Update(dpadDirection[0],  playerMinY);
             mpC.Update(player.GetX(), playerImages[0].Width, Width, dpadDirection[1], player);
-            enemiesManager.Update(mpC.GetSpeed(), mpC.GetStart());
+            enemiesManager.Update(mpC.GetSpeed(), mpC.GetStart(), player.GetX(), player.GetY(), playerImages[0].Width, playerImages[0].Height, player, bullets);
 
             if(bullets.Count > 0)
             {
                 for(int i = 0; i < bullets.Count; i++)
                 {
-                    bullets[i].Update();
+                    bullets[i].Update(player.hasCollided);
 
-                if (bullets[i].y < -bulletImage.Height)
+                if (bullets[i].y < -bulletImage.Height || bullets[i].destroy)
                     bullets.Remove(bullets[i]);
                 }
             }

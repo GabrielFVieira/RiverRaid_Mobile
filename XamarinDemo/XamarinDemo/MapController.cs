@@ -69,9 +69,16 @@ namespace XamarinDemo
                 else
                     speed = 12;
 
+                if(p.GetCol())
+                {
+                    col = true;
+                    speed = 0;
+                }
+
                 if (CheckCollision(playerX, playerW, wid))
                 {
                     col = true;
+                    p.SetCol(col);
                     speed = 0;
                 }
 

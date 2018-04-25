@@ -19,17 +19,17 @@ namespace XamarinDemo
         private Paint paint;
         private float speedX, speedY, x, y, minX, maxX, minY;
         private bool canMove, facingLeft, destroy, init;
-        private Player player;
+        public bool colPlayer;
 
         public void SetMove(bool M) { canMove = M; }
         public bool Destroy() { return destroy; }
+        public bool ColWithPlayer() { return colPlayer; }
 
-        public Enemies(Bitmap[] img, Player p)
+        public Enemies(Bitmap[] img)
         {
             paint = new Paint { Color = Color.White };
             destroy = false;
             canMove = false;
-            p = player;
             imageL = img[0];
             imageR = img[1];
 
@@ -52,7 +52,7 @@ namespace XamarinDemo
 
         }
 
-        public void Update(float spY, bool move)
+        public void Update(float spY, bool move, float pX, float pY, float pH, float pW, List<Bullet> bullets)
         {
             if (!destroy)
             {
@@ -70,17 +70,35 @@ namespace XamarinDemo
                     x -= speedX;
 
                     CollidedWithWall();
+                    CollidedWithPlayer(pX, pY, pW, pH);
                 }
 
                 if (y > minY)
                     destroy = true;
+
+
+                foreach(Bullet b in bullets)
+                {
+                    if(x < b.x + b.width && x + imageL.Width> b.x && y < b.y + b.height && y + imageL.Height > b.y)
+                    {
+                        b.destroy = true;
+                        destroy = true;
+                    }
+                }
+
+
             }
         }
-        /*
-        public void CollidedWithPlayer()
+        
+        public void CollidedWithPlayer(float X, float Y, float W, float H)
         {
-            if(x < player.GetX() + player.GetW && x + imageL.Width >)
-        }*/
+
+            if(x < X + W && x + imageL.Width > X && y < Y + H &&  y + imageL.Height > Y)
+            {
+                colPlayer = true;
+                destroy = true;
+            }
+        }
 
             public void CollidedWithWall()
         {

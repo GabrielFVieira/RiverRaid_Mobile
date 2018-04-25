@@ -33,8 +33,9 @@ public final class R {
         public static final int player_left=0x7f020013;
         public static final int player_middle=0x7f020014;
         public static final int player_right=0x7f020015;
-        public static final int ship_l=0x7f020016;
-        public static final int ship_r=0x7f020017;
+        public static final int restart_text=0x7f020016;
+        public static final int ship_l=0x7f020017;
+        public static final int ship_r=0x7f020018;
     }
     public static final class layout {
         public static final int main=0x7f030000;

@@ -3,6 +3,6 @@
   <PropertyGroup>
     <SelectedDevice>Motorola XT1097</SelectedDevice>
     <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
-    <DefaultDevice>Nexus_4_API_21</DefaultDevice>
+    <DefaultDevice>Android_5.0_API_21</DefaultDevice>
   </PropertyGroup>
 </Project>
