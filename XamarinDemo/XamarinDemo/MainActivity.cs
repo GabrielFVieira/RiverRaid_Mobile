@@ -4,7 +4,7 @@ using Android.OS;
 
 namespace XamarinDemo
 {
-    [Activity(Label = "XamarinDemo", MainLauncher = true)]
+    [Activity(Label = "River Raid", MainLauncher = true)]
     public class MainActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

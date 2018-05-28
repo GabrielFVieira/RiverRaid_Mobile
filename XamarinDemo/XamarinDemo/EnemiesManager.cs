@@ -34,6 +34,7 @@ namespace XamarinDemo
             for(int i = 0; i < NumberOfEnemies; i++)
             {
                 Bitmap[] enemyImg = new Bitmap[2];
+                int p = 30;
 
                 if (i != 0)
                 {
@@ -41,19 +42,28 @@ namespace XamarinDemo
                     int type = randomType.Next(3);
 
                     if (type == 0)
+                    {
                         enemyImg = shipImages;
+                        p = 30;
+                    }
 
                     else if (type == 1)
+                    {
                         enemyImg = heliImages;
+                        p = 60;
+                    }
 
                     else
+                    {
                         enemyImg = jetImages;
+                        p = 100;
+                    }
                 }
 
                 else
                     enemyImg = shipImages;
 
-                Enemies enemy = new Enemies(enemyImg);
+                Enemies enemy = new Enemies(enemyImg, p);
                 enemies.Add(enemy);
             }
         }
@@ -78,20 +88,29 @@ namespace XamarinDemo
             if(enemies.Count < NumberOfEnemies)
             {
                 Bitmap[] enemyImg = new Bitmap[2];
-
+                int s = 30;
                 Random randomType = new Random();
                 int type = randomType.Next(3);
 
                 if (type == 0)
+                {
                     enemyImg = shipImages;
+                    s = 30;
+                }
 
                 else if (type == 1)
+                {
                     enemyImg = heliImages;
+                    s = 60;
+                }
 
                 else
+                {
                     enemyImg = jetImages;
+                    s = 100;
+                }
 
-                Enemies enemy = new Enemies(enemyImg);
+                Enemies enemy = new Enemies(enemyImg, s);
                 enemies.Add(enemy);
             }
         }

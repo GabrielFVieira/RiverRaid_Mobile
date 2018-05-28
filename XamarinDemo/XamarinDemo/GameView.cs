@@ -61,22 +61,16 @@ namespace XamarinDemo
         private Bitmap[] jet = new Bitmap[2];
         private EnemiesManager enemiesManager;
         private int NumberOfEnemies;
-
-        public GameView(Context context) :
+        private Paint textPaint;
+        private GameScore score;
+        private Activity gameActivity;
+        public int highScore;
+        private SaveData save;
+        public GameView(Context context, Activity a) :
         base(context)
         {
             Initialize(context);
-        }
-        public GameView(Context context, IAttributeSet attrs) :
-        base(context, attrs)
-        {
-            Initialize(context);
-        }
-
-        public GameView(Context context, IAttributeSet attrs, int defStyle) :
-        base(context, attrs, defStyle)
-        {
-            Initialize(context);
+            gameActivity = a;
         }
 
         private void Initialize(Context ctx)
@@ -84,7 +78,7 @@ namespace XamarinDemo
             mContext = ctx;
 
             NumberOfEnemies = 10;
-
+            isDead = isPaused = false;
             bgLeft = BitmapFactory.DecodeResource(Resources, Resource.Drawable.game_bg_left);
             bgRight = BitmapFactory.DecodeResource(Resources, Resource.Drawable.game_bg_right);
             bg = BitmapFactory.DecodeResource(Resources, Resource.Drawable.game_bg);
@@ -105,7 +99,7 @@ namespace XamarinDemo
             fireButton = BitmapFactory.DecodeResource(Resources, Resource.Drawable.fire_button);
             fuel = new FuelManager(fuelPointer);
 
-            isDead = isPaused = false;
+            //isDead = isPaused = false;
             playerImages[0] = BitmapFactory.DecodeResource(Resources, Resource.Drawable.player_middle);
             playerImages[1] = BitmapFactory.DecodeResource(Resources, Resource.Drawable.player_left);
             playerImages[2] = BitmapFactory.DecodeResource(Resources, Resource.Drawable.player_right);
@@ -114,10 +108,10 @@ namespace XamarinDemo
             isUpdating = true;
 
             dpad = BitmapFactory.DecodeResource(Resources, Resource.Drawable.d_pad);
-
+            score = new GameScore();
             player = new Player(playerImages[0].Width, playerImages[0].Height);
             paint = new Paint { Color = Color.White };
-
+            textPaint = new Paint { Color = Color.White, TextSize = 50 };
             gray = new Paint { Color = Color.Gray };
 
             // Enemies
@@ -129,13 +123,16 @@ namespace XamarinDemo
             jet[1] = BitmapFactory.DecodeResource(Resources, Resource.Drawable.jet_r);
             enemiesManager = new EnemiesManager(ship, heli, jet, NumberOfEnemies);
 
+            save = new SaveData(Context);
+            highScore = save.GetHighScore();
+
             handler = new Handler();
             handler.Post(this);
         }
 
         protected override void OnDraw(Canvas canvas)
         {
-            if (!isDead && !isPaused)
+            if (!isPaused)
             {
                 hudY = Height * 0.75f;
 
@@ -174,6 +171,7 @@ namespace XamarinDemo
                 if (player.hasCollided)
                 {
                     canvas.DrawBitmap(restartText, Width/2 - restartText.Width/2, Height/2 - restartText.Height/2, paint);
+                    isDead = true;
                 }
 
                 if (bullets.Count > 0)
@@ -183,6 +181,9 @@ namespace XamarinDemo
                         bullets[i].Draw(canvas, bulletImage);
                     }
                 }
+
+                score.Draw(canvas);
+                canvas.DrawText("HighScore: " + highScore.ToString(), GameView.screenW * 0.02f, GameView.screenH * 0.06f, textPaint);
             }
         }
 
@@ -194,10 +195,10 @@ namespace XamarinDemo
             if (e.Action == MotionEventActions.Up && player.hasCollided && !waitingForButtonUp)
                 waitingForButtonUp = true;
 
-            else if (e.Action == MotionEventActions.Up && player.hasCollided && waitingForButtonUp)
+            else if (e.Action == MotionEventActions.Down && player.hasCollided && waitingForButtonUp)
             {
-                //RELOAD ACTIVITY
-                Toast.MakeText(mContext, "Parece que não esta funcionando, não é mesmo?", ToastLength.Short).Show();
+                //RESTART ACTIVITY
+                RestartGame();
             }
 
 
@@ -323,41 +324,88 @@ namespace XamarinDemo
  
         private void Update()
         {
-            player.Update(dpadDirection[0],  playerMinY);
-            mpC.Update(player.GetX(), playerImages[0].Width, Width, dpadDirection[1], player);
-            enemiesManager.Update(mpC.GetSpeed(), mpC.GetStart(), player.GetX(), player.GetY(), playerImages[0].Width, playerImages[0].Height, player, bullets);
-
-            if(bullets.Count > 0)
+            if (!isDead && !isPaused && GameScore.score < 5000)
             {
-                for(int i = 0; i < bullets.Count; i++)
+                player.Update(dpadDirection[0], playerMinY);
+                mpC.Update(player.GetX(), playerImages[0].Width, Width, dpadDirection[1], player);
+                enemiesManager.Update(mpC.GetSpeed(), mpC.GetStart(), player.GetX(), player.GetY(), playerImages[0].Width, playerImages[0].Height, player, bullets);
+
+                if (bullets.Count > 0)
                 {
-                    bullets[i].Update(player.hasCollided);
+                    for (int i = 0; i < bullets.Count; i++)
+                    {
+                        bullets[i].Update(player.hasCollided);
 
-                if (bullets[i].y < -bulletImage.Height || bullets[i].destroy)
-                    bullets.Remove(bullets[i]);
+                        if (bullets[i].y < -bulletImage.Height || bullets[i].destroy)
+                            bullets.Remove(bullets[i]);
+                    }
                 }
-            }
-            /*
-            if(!canFire)
-            { 
-                //  bulletCoolDown -= timer;
-            }
-                
-            if(bulletCoolDown <= 0)
-            {
 
-                canFire = true;
-                bulletCoolDown = 1;
+                /*
+                if(!canFire)
+                { 
+                    //  bulletCoolDown -= timer;
+                }
+
+                if(bulletCoolDown <= 0)
+                {
+
+                    canFire = true;
+                    bulletCoolDown = 1;
+                }
+                */
             }
-            */
+
+            else if(GameScore.score >= 5000)
+            {
+                isPaused = true;
+                isUpdating = false;
+                GameOver();
+                mContext.StartActivity(typeof(WinGame));
+                gameActivity.Finish();
+            }
+
+            else if(isDead)
+            {
+                player.Update(dpadDirection[0], playerMinY);
+                GameOver();
+            }
+
         }
-       
+
+        private void GameOver()
+        {
+            if (GameScore.score > highScore)
+            {
+                save.SetHighScore(GameScore.score);
+                highScore = GameScore.score;
+            }
+        }
+
+        private void RestartGame()
+        {
+            score = new GameScore();
+            player = new Player(playerImages[0].Width, playerImages[0].Height);
+            mpC = new MapController(bgLeft, bgRight, bg);
+            enemiesManager = new EnemiesManager(ship, heli, jet, NumberOfEnemies);
+            waitingForButtonUp = false;
+            isDead = false;
+        }
+
         public void Run()
         {
-            handler.PostDelayed(this, 30);
+            if (isUpdating)
+            {
+                handler.PostDelayed(this, 30);
 
-            Update();
-            this.Invalidate();
+                Update();
+                this.Invalidate();
+            }
+            /*
+            else
+            {
+                
+            }*/
         }
     }
 }

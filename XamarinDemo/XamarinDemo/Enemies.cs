@@ -24,8 +24,9 @@ namespace XamarinDemo
         public void SetMove(bool M) { canMove = M; }
         public bool Destroy() { return destroy; }
         public bool ColWithPlayer() { return colPlayer; }
+        public int point;
 
-        public Enemies(Bitmap[] img)
+        public Enemies(Bitmap[] img, int p)
         {
             paint = new Paint { Color = Color.White };
             destroy = false;
@@ -33,6 +34,7 @@ namespace XamarinDemo
             imageL = img[0];
             imageR = img[1];
 
+            point = p;
 
             Random random = new Random();
 
@@ -81,6 +83,7 @@ namespace XamarinDemo
                 {
                     if(x < b.x + b.width && x + imageL.Width> b.x && y < b.y + b.height && y + imageL.Height > b.y)
                     {
+                        GameScore.score += point;
                         b.destroy = true;
                         destroy = true;
                     }

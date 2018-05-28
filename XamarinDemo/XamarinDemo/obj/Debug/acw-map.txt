@@ -14,3 +14,11 @@ XamarinDemo.MainActivity, XamarinDemo;md5dd9e07601b2bb8a7c9f88681dee08f8c.MainAc
 XamarinDemo.MainActivity, XamarinDemo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5dd9e07601b2bb8a7c9f88681dee08f8c.MainActivity
 XamarinDemo.MainActivity;md5dd9e07601b2bb8a7c9f88681dee08f8c.MainActivity
 xamarindemo.MainActivity;md5dd9e07601b2bb8a7c9f88681dee08f8c.MainActivity
+XamarinDemo.WinGame, XamarinDemo;md5dd9e07601b2bb8a7c9f88681dee08f8c.WinGame
+XamarinDemo.WinGame, XamarinDemo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5dd9e07601b2bb8a7c9f88681dee08f8c.WinGame
+XamarinDemo.WinGame;md5dd9e07601b2bb8a7c9f88681dee08f8c.WinGame
+xamarindemo.WinGame;md5dd9e07601b2bb8a7c9f88681dee08f8c.WinGame
+XamarinDemo.WinView, XamarinDemo;md5dd9e07601b2bb8a7c9f88681dee08f8c.WinView
+XamarinDemo.WinView, XamarinDemo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5dd9e07601b2bb8a7c9f88681dee08f8c.WinView
+XamarinDemo.WinView;md5dd9e07601b2bb8a7c9f88681dee08f8c.WinView
+xamarindemo.WinView;md5dd9e07601b2bb8a7c9f88681dee08f8c.WinView

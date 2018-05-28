@@ -13,29 +13,32 @@ namespace XamarinDemo
 
             RequestedOrientation = Android.Content.PM.ScreenOrientation.Portrait;
 
-            SetContentView(new GameView(this));
+            SetContentView(new GameView(this, this));
 
         }
-        /*
+        
         protected override void OnPause()
         {
             base.OnPause();
             GameView.isPaused = true;
-            Toast.MakeText(this, "PAUSE!!!!!", ToastLength.Short).Show();
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            GameView.isPaused = false;
         }
 
         protected override void OnStop()
         {
             base.OnStop();
             GameView.isPaused = true;
-            Toast.MakeText(this, "STOP!!!!!", ToastLength.Short).Show();
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
             GameView.isUpdating = false;
-            Toast.MakeText(this, "DESTROY!!!!!", ToastLength.Short).Show();
-        }*/
+        }
     }
 }

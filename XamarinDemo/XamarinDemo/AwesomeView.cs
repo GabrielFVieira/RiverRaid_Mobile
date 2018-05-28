@@ -93,8 +93,6 @@ namespace XamarinDemo
             {
                 if (indexHit == 0)
                 {
-                    Toast.MakeText(mContext, "Start Game", ToastLength.Short).Show();
-
                     mContext.StartActivity(typeof(InGame));
                 }
 

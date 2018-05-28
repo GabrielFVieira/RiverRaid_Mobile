@@ -25,17 +25,21 @@ public final class R {
         public static final int heli2_r=0x7f02000b;
         public static final int heli_l=0x7f02000c;
         public static final int heli_r=0x7f02000d;
-        public static final int jet_l=0x7f02000e;
-        public static final int jet_r=0x7f02000f;
-        public static final int menu_bg=0x7f020010;
-        public static final int play=0x7f020011;
-        public static final int player_explosion=0x7f020012;
-        public static final int player_left=0x7f020013;
-        public static final int player_middle=0x7f020014;
-        public static final int player_right=0x7f020015;
-        public static final int restart_text=0x7f020016;
-        public static final int ship_l=0x7f020017;
-        public static final int ship_r=0x7f020018;
+        public static final int icon=0x7f02000e;
+        public static final int jet_l=0x7f02000f;
+        public static final int jet_r=0x7f020010;
+        public static final int menu_bg=0x7f020011;
+        public static final int play=0x7f020012;
+        public static final int player_explosion=0x7f020013;
+        public static final int player_left=0x7f020014;
+        public static final int player_middle=0x7f020015;
+        public static final int player_right=0x7f020016;
+        public static final int reiniciar=0x7f020017;
+        public static final int restart_text=0x7f020018;
+        public static final int ship_l=0x7f020019;
+        public static final int ship_r=0x7f02001a;
+        public static final int teladevitoria=0x7f02001b;
+        public static final int voltar=0x7f02001c;
     }
     public static final class layout {
         public static final int main=0x7f030000;
